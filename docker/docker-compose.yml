@@ -1,0 +1,14 @@
+services:
+  localres-marketplace-service:
+    init: true
+    ports:
+      - 127.0.0.1:18001:8000
+    build:
+      context: ../.
+    # command: tail -f /dev/null
+    command: ./stack c-run
+    env_file: ../.env
+    environment:
+      - DEBUG=
+      - SOURCE_POSTGRES_HOST=source-postgres
+      - SOURCE_POSTGRES_PORT=5432

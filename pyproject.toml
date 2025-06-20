@@ -1,0 +1,32 @@
+[tool.poetry]
+name = "localres-marketplace-service"
+version = "0.1.0"
+description = ""
+authors = ["riccardo solazzi <riccardo.solazzi@revoltsrl.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+logbook = "^1.6.0"
+fastapi = "^0.115.4"
+uvicorn = "^0.24.0.post1"
+py-algorand-sdk = "^2.6.1"
+pytest = "^8.3.3"
+ipdb = "^0.13.13"
+httpx = "^0.27.2"
+pytest-asyncio = "^0.24.0"
+option = "^2.1.0"
+rich = "^13.9.3"
+pandas = ">=2,<3"
+requests = "^2.32.3"
+sqlalchemy = "^2.0.41"
+pg8000 = "^1.31.2"
+
+
+[tool.poetry.group.dev.dependencies]
+auto-changelog = "^0.6.0"
+ruff = "^0.12.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

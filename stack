@@ -1,0 +1,54 @@
+#!/bin/bash
+
+FLAG="$1"
+shift
+
+
+function export_env() {
+    while IFS= read -r line; do
+    if [[ ! -z "$line" && "$line" != \#* ]]; then
+        export "$line"
+    fi
+    done < $1
+}
+
+case "$FLAG" in 
+
+    run)
+        export_env .env
+        source `poetry env info -p`/bin/activate
+        uvicorn localres_marketplace_service.main:app --reload --port 8000
+        ;;
+    
+    c-run)
+        source .venv/bin/activate
+        uvicorn localres_marketplace_service.main:app --reload --port 8000 --host 0.0.0.0
+        ;;
+
+
+    prod)
+        docker compose \
+            -f docker/docker-compose.yml \
+            -f docker/docker-compose-database-service.yml \
+            --env-file .env \
+            "$@"
+        ;;
+
+    dev)
+        docker compose \
+            -f docker/docker-compose-database-service.yml \
+            --env-file .env \
+            "$@"
+        ;;
+
+    test)
+        export_env .env
+        source `poetry env info -p`/bin/activate
+        pytest -sv "$@"
+        ;;
+    
+    *)
+        exit 1
+        ;;
+
+esac
