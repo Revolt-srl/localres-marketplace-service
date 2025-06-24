@@ -127,3 +127,44 @@ Create a .env file in the root of the project based on the .env.example file and
 ### Start
 To start the service just use the command `./stack prod up -d` and you will be able to spin up a docker container with the port `18001` exposed on your network.
 Visit the page `http://localhost:18001/docs` to see the endpoints
+
+## Api Documentation
+The service expose the following endpoints:
+### Protected on Admin Level
+The following endpoints are protected using the Admin Token in the `.env` file
+
+- DELETE `blockchain/user/{user_id}`: using the id of the user you can delete the data about if from the smart contract
+
+- PUT `blockchain/user`: this endpoint allow you to add a user to the smart contract. For more info read the following paragraph
+
+- GET `marketplace/run`: this endpoint trigger the execution of the marketplace algorithm
+
+### Protected on User level
+The following endpoints are protected using the Client Token in the `.env` file
+
+- GET `blockchain/user/{user_id}`: using the id of the user you can get the data about it
+
+- GET `blockchain/user/`: without adding the id of the user you will be able to get all the data for all the users inside the smart contract
+
+
+### The INSERT/UPDATE of an User
+Using the `PUT` to the endpoint `blockchain/user` it is possible to create or update an User on the Smart Contract stored in the blockchain.
+
+The data structure to perform the action is based on the follwing classes:
+
+```
+class UserViewModel(BaseModel):
+    user_id: str
+    balance: int
+    thresholds: list[Threshold]
+    is_new: bool = True
+
+
+class Threshold(BaseModel):
+    hour: int
+    value: int
+
+    class Config:
+        arbitrary_types_allowed = True
+
+```
