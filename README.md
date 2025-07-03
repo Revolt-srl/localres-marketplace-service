@@ -15,6 +15,7 @@ There are some prerequisites to run this project
 - Docker: the service is containerized using the Docker technology, to make the project run you will need a machine with docker enabled
 - An application in the Algorand Blockchain
 - A PostgreSQL compatible database
+- A service that will schedule the execution
 
 ### The application in the Algorand Blockchain
 To register the transaction using the blockchain technology, this service need a blockchain application in the Algorand environment.
@@ -119,6 +120,14 @@ CREATE TABLE users(
 - blockchain_id: the id of the user inside the smart contract
 - production_device: the production device associated to the user
 
+### A service that will schedule the execution
+
+The service DOES NOT execute every hour, you will need to use an external service to trigger the execution every hour.
+
+In our case we use a scheduling service called [Apache Airflow](https://airflow.apache.org/) which will trigger the execution of the service every hour doing a GET REQUEST to the endpoint `marketplace/run`.
+
+You are free to choose the solution you want, like a chron job which performs the get request mentioned before.
+
 ## Run the service
 ### Setup
 Before running the service you will need to setup you environment variable.
@@ -137,7 +146,7 @@ The following endpoints are protected using the Admin Token in the `.env` file
 
 - PUT `blockchain/user`: this endpoint allow you to add a user to the smart contract. For more info read the following paragraph
 
-- GET `marketplace/run`: this endpoint trigger the execution of the marketplace algorithm
+- GET `marketplace/run`: this endpoint trigger the execution of the marketplace algorithm. The service takes in the consideration the datetime of the execution. 
 
 ### Protected on User level
 The following endpoints are protected using the Client Token in the `.env` file
