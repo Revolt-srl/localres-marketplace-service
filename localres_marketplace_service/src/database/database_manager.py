@@ -125,7 +125,9 @@ class DatabaseManager(BaseModel):
 
         """
         timestamp_to_calculate = timestamp.replace(hour=timestamp.hour-1)
+        timestamp_to_calculate = timestamp_to_calculate.replace(minute=0, second=0, microsecond=0)
         timestamp_one_hour_before = timestamp.replace(hour=timestamp.hour-2)
+        timestamp_one_hour_before = timestamp_one_hour_before.replace(minute=0, second=0, microsecond=0)
 
         with self.get_session() as session:
             consumptions = session.query(DatabaseConsumption).filter(
