@@ -2,10 +2,18 @@
 ## Overview 
 This service has been deployed by [Revolt](https://revoltsrl.com) to manage the marketplace transaction between prosumer and consumer of a local energy community inside the [Lolcares Project](https://www.localres.eu/)
 
+```diff
+- Enhance description?
+```
+
 ## The service
 The service aim to manage the transaction between the energy produced and the energy consumed inside a local energy community. It also trace it using the blockchain technology assuring that every transaction will be recorded and uneditable.
 
 Based on the threshold setted by the consumer, they will earn some token in the localres environment.
+
+```diff
+- Enhance description? We can use article
+```
 
 ## The architecture
 The project is based on the framework FastAPI, on the orm SQLAlchemy and on the Algorand Blockchain.
@@ -14,7 +22,17 @@ The project is based on the framework FastAPI, on the orm SQLAlchemy and on the 
 There are some prerequisites to run this project
 - Docker: the service is containerized using the Docker technology, to make the project run you will need a machine with docker enabled
 - An application in the Algorand Blockchain
+
+```diff
+- Me scordo facile... per forza algorand? Non può essere usato con diverse blockchain? E mettiamo che noi lo abbiamo concretizzato qua
+```
+
 - A PostgreSQL compatible database
+
+```diff
+- PostGRE peffò?
+```
+
 - A service that will schedule the execution
 
 ### The application in the Algorand Blockchain
@@ -34,7 +52,7 @@ ps_<value_of_thresholds_encoded_as_bytes_using_utf8_padded_to_3_digits>balance_<
 
 ### A PostgreSQL compatbile database
 
-We used a PostgreSQL instance of a database inside a Docker container. You can choose the database you want, just make sure that is Pgsql compatible. In our case the database will need to have the following tables:
+We used a PostgreSQL instance of a database inside a Docker container. You can choose the database you want, just make sure that is PgSQL compatible. In our case the database will need to have the following tables:
 - consumption
 - production
 - trading_data
@@ -176,4 +194,8 @@ class Threshold(BaseModel):
     class Config:
         arbitrary_types_allowed = True
 
+```
+
+```diff
+- Probabilmente mi sfugge qualcosa. Il servizio non espone delle API? Dove leggo quello che il servizio produce? Quindi le transazioni, i dati di consumo, i token presi ecc.
 ```
