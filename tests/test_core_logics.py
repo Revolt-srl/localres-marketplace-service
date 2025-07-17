@@ -53,15 +53,15 @@ async def test_core_logic_overproduction():
                 "trades": [
                     {
                         "id_prosumer": "P1",
-                        "given_T": 157.5,
+                        "given_T": 192.5,
                         "purchased_energy": 3.5,
-                        "received_T": 192.5,
+                        "received_T": 157.5,
                     },
                     {
                         "id_prosumer": "P2",
-                        "given_T": 202.5,
+                        "given_T": 247.5,
                         "purchased_energy": 4.5,
-                        "received_T": 247.5,
+                        "received_T": 202.5,
                     },
                 ],
             },
@@ -70,15 +70,15 @@ async def test_core_logic_overproduction():
                 "trades": [
                     {
                         "id_prosumer": "P1",
-                        "given_T": 78.0,
+                        "given_T": 182.0,
                         "purchased_energy": 2.6,
-                        "received_T": 182.0,
+                        "received_T": 78.0,
                     },
                     {
                         "id_prosumer": "P2",
-                        "given_T": 102.0,
+                        "given_T": 238.0,
                         "purchased_energy": 3.4,
-                        "received_T": 238.0,
+                        "received_T": 102.0,
                     },
                 ],
             },
@@ -87,21 +87,21 @@ async def test_core_logic_overproduction():
                 "trades": [
                     {
                         "id_prosumer": "P1",
-                        "given_T": 110.0,
+                        "given_T": 330.0,
                         "purchased_energy": 4.4,
-                        "received_T": 330.0,
+                        "received_T": 110.0,
                     },
                     {
                         "id_prosumer": "P2",
-                        "given_T": 140.0,
+                        "given_T": 420.0,
                         "purchased_energy": 5.6,
-                        "received_T": 420.0,
+                        "received_T": 140.0,
                     },
                 ],
             },
         ]
     )
-
+    
     result = core_logics.apply_trading_logic(
         consumer_data_overproduction, prosumer_data_overproduction
     )
@@ -143,7 +143,7 @@ async def test_core_logic_underproduction():
             {"id_prosumer": "P2", "produced_energy": 8},
         ]
     )
-    # Trading Data Underproduction
+    # Trading Data Underproduction    
     trading_data_underproduction = TradingData(
         trading_data=[
             {
@@ -151,15 +151,15 @@ async def test_core_logic_underproduction():
                 "trades": [
                     {
                         "id_prosumer": "P1",
-                        "given_T": 502.5,
+                        "given_T": 167.5,
                         "purchased_energy": 6.7,
-                        "received_T": 167.5,
+                        "received_T": 502.5,
                     },
                     {
                         "id_prosumer": "P2",
-                        "given_T": 397.5,
+                        "given_T": 132.5,
                         "purchased_energy": 5.3,
-                        "received_T": 132.5,
+                        "received_T": 397.5,
                     },
                 ],
             },
@@ -168,15 +168,15 @@ async def test_core_logic_underproduction():
                 "trades": [
                     {
                         "id_prosumer": "P1",
-                        "given_T": 231.0,
+                        "given_T": 99.0,
                         "purchased_energy": 3.3,
-                        "received_T": 99.0,
+                        "received_T": 231.0,
                     },
                     {
                         "id_prosumer": "P2",
-                        "given_T": 189.0,
+                        "given_T": 81.0,
                         "purchased_energy": 2.7,
-                        "received_T": 81.0,
+                        "received_T": 189.0,
                     },
                 ],
             },
