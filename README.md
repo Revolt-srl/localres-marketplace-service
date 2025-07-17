@@ -15,7 +15,10 @@ Based on the threshold setted by the consumer, they will earn some token in the 
 - Enhance description? We can use article
 ```
 
+
 ## The architecture
+<img width="801" height="615" alt="marketplace_library v3 excalidraw" src="https://github.com/user-attachments/assets/4fdecdb9-bee0-4bf0-98e0-46110f4fcb6e" />
+
 The project is based on the framework FastAPI, on the orm SQLAlchemy and on the Algorand Blockchain.
 
 ## Prerequisites
@@ -52,7 +55,9 @@ ps_<value_of_thresholds_encoded_as_bytes_using_utf8_padded_to_3_digits>balance_<
 
 ### A PostgreSQL compatbile database
 
-We used a PostgreSQL instance of a database inside a Docker container. You can choose the database you want, just make sure that is PgSQL compatible. In our case the database will need to have the following tables:
+We used a PostgreSQL instance of a database inside a Docker container. You can choose the database you want, just make sure that is PgSQL compatible. 
+If you want to add the support to other databases feel free to open a Pull Request with the implementation!
+In our case the database will need to have the following tables:
 - consumption
 - production
 - trading_data
@@ -196,6 +201,5 @@ class Threshold(BaseModel):
 
 ```
 
-```diff
-- Probabilmente mi sfugge qualcosa. Il servizio non espone delle API? Dove leggo quello che il servizio produce? Quindi le transazioni, i dati di consumo, i token presi ecc.
-```
+## The output of the service
+To see the output of the service you will need a Database Client like [DBeaver](https://dbeaver.io/) and access to the data inside the `Trading_data table`.
