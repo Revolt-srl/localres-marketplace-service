@@ -89,12 +89,12 @@ class CoreLogics(BaseModel):
                     )
                     for prosumer_id in df_prosumer_percentage["id_prosumer"]:
                         exchanged_tokens.loc[id_consumer, prosumer_id] = round(
-                            exchanged_energy.loc[id_consumer, prosumer_id] * threshold,
+                            exchanged_energy.loc[id_consumer, prosumer_id] * (100 - threshold),
                             1,
                         )
                         prosumer_tokens.loc[id_consumer, prosumer_id] = round(
                             exchanged_energy.loc[id_consumer, prosumer_id]
-                            * (100 - threshold),
+                            * threshold,
                             1,
                         )
             # RESULTS
