@@ -1,19 +1,19 @@
 # Localres Marketplace Service
 ## Overview 
-This service has been deployed by [Revolt](https://revoltsrl.com) to manage the marketplace transaction between prosumer and consumer of a local energy community inside the [Lolcares Project](https://www.localres.eu/)
+This service has been deployed by [Revolt](https://revoltsrl.com) to manage the marketplace transactions between prosumers and consumers of a renewable energy community (REC) in the context of the [LocalRES Project](https://www.localres.eu/).
 
-```diff
-- Enhance description?
-```
+The service is designed to facilitate P2P energy exchange within RECs, promoting local self-consumption and user engagement within the Italian regulation framework. Energy exchanges are virtual: no physical transfer occurs. Local renewable energy is virtually assigned to members based on real-time production and consumption.
 
 ## The service
-The service aim to manage the transaction between the energy produced and the energy consumed inside a local energy community. It also trace it using the blockchain technology assuring that every transaction will be recorded and uneditable.
+The service manages energy attribution within a REC and distributes a virtual token called RevoltCoin (RC) based on actual production and consumption data.
 
-Based on the threshold setted by the consumer, they will earn some token in the localres environment.
+For each kWh of renewable energy that a consumer virtually self-consumes, 100 RCs represent the base value of that energy. Consumers participate by submitting offers indicating how many RCs they are willing to pay per kWh (denoted as N). Their net gain is calculated as the difference between the baseline (100 RC) and their offer (i.e., 100 – N RC).
 
-```diff
-- Enhance description? We can use article
-```
+Consumers who do not submit an offer are assigned a default offer of 95 RC/kWh and are matched only after active participants. All offers are ranked in descending order and available energy is assigned to the highest bidders first.
+
+Once the matching is complete, RCs are distributed to prosumers in proportion to the renewable energy they actually produced. The RC exchange takes place after real production and consumption have occurred and follows any user-defined preferences.
+
+All transactions are securely recorded on a blockchain, ensuring transparency, traceability and immutability of the process.
 
 ## The architecture
 The project is based on the framework FastAPI, on the orm SQLAlchemy and on the Algorand Blockchain.
@@ -23,15 +23,7 @@ There are some prerequisites to run this project
 - Docker: the service is containerized using the Docker technology, to make the project run you will need a machine with docker enabled
 - An application in the Algorand Blockchain
 
-```diff
-- Me scordo facile... per forza algorand? Non può essere usato con diverse blockchain? E mettiamo che noi lo abbiamo concretizzato qua
-```
-
 - A PostgreSQL compatible database
-
-```diff
-- PostGRE peffò?
-```
 
 - A service that will schedule the execution
 
@@ -155,7 +147,7 @@ Create a .env file in the root of the project based on the .env.example file and
 To start the service just use the command `./stack prod up -d` and you will be able to spin up a docker container with the port `18001` exposed on your network.
 Visit the page `http://localhost:18001/docs` to see the endpoints
 
-## Api Documentation
+## API Documentation
 The service expose the following endpoints:
 ### Protected on Admin Level
 The following endpoints are protected using the Admin Token in the `.env` file
