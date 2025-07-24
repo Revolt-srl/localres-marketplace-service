@@ -15,11 +15,15 @@ Once the matching is complete, RCs are distributed to prosumers in proportion to
 
 All transactions are securely recorded on a blockchain, ensuring transparency, traceability and immutability of the process.
 
+ENRI AGGIUNGE DISCORSO THRESHOLD
 
 ## The architecture
 <img width="801" height="615" alt="marketplace_library v3 excalidraw" src="https://github.com/user-attachments/assets/4fdecdb9-bee0-4bf0-98e0-46110f4fcb6e" />
 
 The project is based on the framework FastAPI, on the orm SQLAlchemy and on the Algorand Blockchain.
+
+### Data workflow
+TOBEWRITE
 
 ## Prerequisites
 There are some prerequisites to run this project
@@ -57,7 +61,7 @@ In our case the database will need to have the following tables:
   
 #### Consumption table
 
-```
+```sql
 CREATE TABLE consumption(
     id varchar(255) NOT NULL,
     device varchar(255),
@@ -75,7 +79,7 @@ CREATE TABLE consumption(
 
 #### Production table
 
-```
+```sql
 CREATE TABLE production(
     id varchar(255) NOT NULL,
     device varchar(255),
@@ -92,7 +96,7 @@ CREATE TABLE production(
   
 #### Trading_data table
 
-```
+```sql
 CREATE TABLE trading_data(
     id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
     timestamp timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -104,7 +108,6 @@ CREATE TABLE trading_data(
     transaction_id varchar(255),
     PRIMARY KEY(id)
 );
-
 ```
 
 - id: the identifier of the record
@@ -119,7 +122,7 @@ CREATE TABLE trading_data(
 
 #### Users table
 
-```
+```sql
 CREATE TABLE users(
     id varchar(255) NOT NULL,
     device varchar(255),
@@ -174,9 +177,9 @@ The following endpoints are protected using the Client Token in the `.env` file
 ### The INSERT/UPDATE of an User
 Using the `PUT` to the endpoint `blockchain/user` it is possible to create or update an User on the Smart Contract stored in the blockchain.
 
-The data structure to perform the action is based on the follwing classes:
+The data structure to perform the action is based on the following classes:
 
-```
+```python
 class UserViewModel(BaseModel):
     user_id: str
     balance: int
@@ -186,7 +189,7 @@ class UserViewModel(BaseModel):
 
 class Threshold(BaseModel):
     hour: int
-    value: int
+    value: int # use 0 as default value
 
     class Config:
         arbitrary_types_allowed = True
