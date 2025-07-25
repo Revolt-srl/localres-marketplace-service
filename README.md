@@ -15,7 +15,7 @@ Once the matching is complete, RCs are distributed to prosumers in proportion to
 
 All transactions are securely recorded on a blockchain, ensuring transparency, traceability and immutability of the process.
 
-ENRI AGGIUNGE DISCORSO THRESHOLD
+In our architecture, what each consumer submits as an offer, i.e. the amount of RCs they are willing to leave to the prosumer for each virtually self-consumed kWh, is formally referred to as a **threshold**. This threshold defines their priority in the ranking used for energy allocation, with higher thresholds gaining precedence in the matching process.
 
 ## The architecture
 <img width="801" height="615" alt="marketplace_library v3 excalidraw" src="https://github.com/user-attachments/assets/4fdecdb9-bee0-4bf0-98e0-46110f4fcb6e" />
