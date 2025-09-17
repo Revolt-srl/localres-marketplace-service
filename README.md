@@ -23,7 +23,8 @@ In our architecture, what each consumer submits as an offer, i.e. the amount of 
 The project is based on the framework FastAPI, on the orm SQLAlchemy and on the Algorand Blockchain.
 
 ### Data workflow
-TOBEWRITE
+<img width="958" height="299" alt="data-workflow-localres excalidraw" src="https://github.com/user-attachments/assets/af6880d3-1749-47f8-a0d7-5c09666188f0" />
+
 
 ## Prerequisites
 There are some prerequisites to run this project
