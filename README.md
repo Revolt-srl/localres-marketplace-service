@@ -11,7 +11,7 @@ For each kWh of renewable energy that a consumer virtually self-consumes, 100 RC
 
 Consumers who do not submit an offer are assigned a default offer of 95 RC/kWh and are matched only after active participants. All offers are ranked in descending order and available energy is assigned to the highest bidders first.
 
-Once the matching is complete, RCs are distributed to prosumers in proportion to the renewable energy they actually produced. The RC exchange takes place after real production and consumption have occurred and follows any user-defined preferences.
+Once the matching is complete, RCs are distributed to prosumers in proportion to the renewable energy they actually produced. The RC exchange occurs after actual production and consumption, following all user-defined thresholds.
 
 All transactions are securely recorded on a blockchain, ensuring transparency, traceability and immutability of the process.
 
