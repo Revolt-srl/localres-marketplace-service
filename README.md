@@ -1,20 +1,38 @@
 # Localres Marketplace Service
 ## Overview 
-This service has been deployed by [Revolt](https://revoltsrl.com) to manage the marketplace transaction between prosumer and consumer of a local energy community inside the [Lolcares Project](https://www.localres.eu/)
+This service has been deployed by [Revolt](https://revoltsrl.com) to manage the marketplace transactions between prosumers and consumers of a renewable energy community (REC) in the context of the [LocalRES Project](https://www.localres.eu/).
+
+The service is designed to facilitate P2P energy exchange within RECs, promoting local self-consumption and user engagement within the Italian regulation framework. Energy exchanges are virtual: no physical transfer occurs. Local renewable energy is virtually assigned to members based on real-time production and consumption.
 
 ## The service
-The service aim to manage the transaction between the energy produced and the energy consumed inside a local energy community. It also trace it using the blockchain technology assuring that every transaction will be recorded and uneditable.
+The service manages energy attribution within a REC and distributes a virtual token called RevoltCoin (RC) based on actual production and consumption data.
 
-Based on the threshold setted by the consumer, they will earn some token in the localres environment.
+For each kWh of renewable energy that a consumer virtually self-consumes, 100 RCs represent the base value of that energy. Consumers participate by submitting offers indicating how many RCs they are willing to pay per kWh (denoted as N). Their net gain is calculated as the difference between the baseline (100 RC) and their offer (i.e., 100 – N RC).
+
+Consumers who do not submit an offer are assigned a default offer of 95 RC/kWh and are matched only after active participants. All offers are ranked in descending order and available energy is assigned to the highest bidders first.
+
+Once the matching is complete, RCs are distributed to prosumers in proportion to the renewable energy they actually produced. The RC exchange occurs after actual production and consumption, following all user-defined thresholds.
+
+All transactions are securely recorded on a blockchain, ensuring transparency, traceability and immutability of the process.
+
+In our architecture, what each consumer submits as an offer, i.e. the amount of RCs they are willing to leave to the prosumer for each virtually self-consumed kWh, is formally referred to as a **threshold**. This threshold defines their priority in the ranking used for energy allocation, with higher thresholds gaining precedence in the matching process.
 
 ## The architecture
+<img width="801" height="615" alt="marketplace_library v3 excalidraw" src="https://github.com/user-attachments/assets/4fdecdb9-bee0-4bf0-98e0-46110f4fcb6e" />
+
 The project is based on the framework FastAPI, on the orm SQLAlchemy and on the Algorand Blockchain.
+
+### Data workflow
+<img width="958" height="299" alt="data-workflow-localres excalidraw" src="https://github.com/user-attachments/assets/af6880d3-1749-47f8-a0d7-5c09666188f0" />
+
 
 ## Prerequisites
 There are some prerequisites to run this project
 - Docker: the service is containerized using the Docker technology, to make the project run you will need a machine with docker enabled
 - An application in the Algorand Blockchain
+
 - A PostgreSQL compatible database
+
 - A service that will schedule the execution
 
 ### The application in the Algorand Blockchain
@@ -34,7 +52,9 @@ ps_<value_of_thresholds_encoded_as_bytes_using_utf8_padded_to_3_digits>balance_<
 
 ### A PostgreSQL compatbile database
 
-We used a PostgreSQL instance of a database inside a Docker container. You can choose the database you want, just make sure that is Pgsql compatible. In our case the database will need to have the following tables:
+We used a PostgreSQL instance of a database inside a Docker container. You can choose the database you want, just make sure that is PgSQL compatible. 
+If you want to add the support to other databases feel free to open a Pull Request with the implementation!
+In our case the database will need to have the following tables:
 - consumption
 - production
 - trading_data
@@ -42,7 +62,7 @@ We used a PostgreSQL instance of a database inside a Docker container. You can c
   
 #### Consumption table
 
-```
+```sql
 CREATE TABLE consumption(
     id varchar(255) NOT NULL,
     device varchar(255),
@@ -60,7 +80,7 @@ CREATE TABLE consumption(
 
 #### Production table
 
-```
+```sql
 CREATE TABLE production(
     id varchar(255) NOT NULL,
     device varchar(255),
@@ -77,7 +97,7 @@ CREATE TABLE production(
   
 #### Trading_data table
 
-```
+```sql
 CREATE TABLE trading_data(
     id integer GENERATED ALWAYS AS IDENTITY NOT NULL,
     timestamp timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -89,7 +109,6 @@ CREATE TABLE trading_data(
     transaction_id varchar(255),
     PRIMARY KEY(id)
 );
-
 ```
 
 - id: the identifier of the record
@@ -104,7 +123,7 @@ CREATE TABLE trading_data(
 
 #### Users table
 
-```
+```sql
 CREATE TABLE users(
     id varchar(255) NOT NULL,
     device varchar(255),
@@ -137,7 +156,7 @@ Create a .env file in the root of the project based on the .env.example file and
 To start the service just use the command `./stack prod up -d` and you will be able to spin up a docker container with the port `18001` exposed on your network.
 Visit the page `http://localhost:18001/docs` to see the endpoints
 
-## Api Documentation
+## API Documentation
 The service expose the following endpoints:
 ### Protected on Admin Level
 The following endpoints are protected using the Admin Token in the `.env` file
@@ -159,9 +178,9 @@ The following endpoints are protected using the Client Token in the `.env` file
 ### The INSERT/UPDATE of an User
 Using the `PUT` to the endpoint `blockchain/user` it is possible to create or update an User on the Smart Contract stored in the blockchain.
 
-The data structure to perform the action is based on the follwing classes:
+The data structure to perform the action is based on the following classes:
 
-```
+```python
 class UserViewModel(BaseModel):
     user_id: str
     balance: int
@@ -171,9 +190,12 @@ class UserViewModel(BaseModel):
 
 class Threshold(BaseModel):
     hour: int
-    value: int
+    value: int # use 0 as default value
 
     class Config:
         arbitrary_types_allowed = True
 
 ```
+
+## The output of the service
+To see the output of the service you will need a Database Client like [DBeaver](https://dbeaver.io/) and access to the data inside the `Trading_data table`.
